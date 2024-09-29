@@ -15,7 +15,11 @@ public class BFCalculator {
   // +--------+
 
   /** The numerator of the fraction. Can be positive, zero or negative. */
-  BigFraction prev;
+  private BigFraction prev;
+
+  // +--------------+-------------------------------------------------
+  // | Constructors |
+  // +--------------+
 
   /**
    * Create a calculator.
@@ -23,6 +27,10 @@ public class BFCalculator {
   public BFCalculator() {
     this.prev = new BigFraction(0, 0);
   } // BFCalculator
+
+  // +---------+------------------------------------------------------
+  // | Methods |
+  // +---------+
 
   /**
    * Get the fraction.
@@ -61,8 +69,11 @@ public class BFCalculator {
    * @return
    */
   public void subtract(BigFraction val) {
-    if (this.prev.num == BigInteger.valueOf(0)) {
-      this.prev = new BigFraction(BigInteger.valueOf(0).subtract(val.num), val.denom);
+
+    //If we are subtracing from the number 0
+    if (this.prev.numerator() == BigInteger.valueOf(0)) {
+      this.prev = new BigFraction(BigInteger.valueOf(0).subtract(val.numerator()),
+          val.denominator());
     } else {
       this.prev = this.prev.subtract(val);
     } // if
@@ -73,8 +84,9 @@ public class BFCalculator {
    * @param val
    */
   public void multiply(BigFraction val) {
-    this.prev = new BigFraction(this.prev.num.multiply(val.num),
-        this.prev.denom.multiply(val.denom));
+
+    //multiply the nums and denoms
+    this.prev = this.prev.multiplyFraction(val);
   } // add(BigFraction)
 
   /**
@@ -82,12 +94,11 @@ public class BFCalculator {
    * @param val
    */
   public void divide(BigFraction val) {
-    this.prev = BigFraction.simplify(new BigFraction(this.prev.num.multiply(val.denom),
-        this.prev.denom.multiply(val.num)));
+    this.prev = this.prev.divideFraction(val);
   } // divide(BigFraction)
 
   /**
-   * Clear the fractions.
+   * Clear the fractions by setting the num and denom to 0.
    */
   public void clear() {
     this.prev = new BigFraction(0, 0);

@@ -14,10 +14,10 @@ public class BFRegisterSet {
   // +--------+
 
   /**Create an array that holds all of the chars to be stored. */
-  ArrayList<Character> chars;
+  private ArrayList<Character> chars;
 
   /**Create an array that holds all of the BigFractions to be stored. */
-  ArrayList<BigFraction> bigFracs;
+  private ArrayList<BigFraction> bigFracs;
 
   /**
    * Initialize the register to have two arrays.

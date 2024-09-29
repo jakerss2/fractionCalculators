@@ -19,10 +19,10 @@ public class BigFraction {
   // +--------+
 
   /** The numerator of the fraction. Can be positive, zero or negative. */
-  BigInteger num;
+  private BigInteger num;
 
   /** The denominator of the fraction. Must be non-negative. */
-  BigInteger denom;
+  private BigInteger denom;
 
   // +--------------+-------------------------------------------------
   // | Constructors |
@@ -39,8 +39,10 @@ public class BigFraction {
    *
    */
   public BigFraction(BigInteger numerator, BigInteger denominator) {
-    this.num = numerator;
-    this.denom = denominator;
+    BigInteger[] bigInts = BigFraction.simplify(numerator, denominator);
+
+    this.num = bigInts[0];
+    this.denom = bigInts[1];
   } // BigFraction(BigInteger, BigInteger)
 
   /**
@@ -52,8 +54,11 @@ public class BigFraction {
    *   The denominator of the fraction.
    */
   public BigFraction(int numerator, int denominator) {
-    this.num = BigInteger.valueOf(numerator);
-    this.denom = BigInteger.valueOf(denominator);
+    BigInteger[] bigInts = BigFraction.simplify(BigInteger.valueOf(numerator),
+    BigInteger.valueOf(denominator));
+
+    this.num = bigInts[0];
+    this.denom = bigInts[1];
   } // BigFraction(int, int)
 
     /**
@@ -84,8 +89,11 @@ public class BigFraction {
     String top = str.substring(0, slash);
     String bottom = str.substring((slash + 1));
 
-    this.num = BigInteger.valueOf((Integer.parseInt(top)));
-    this.denom = BigInteger.valueOf((Integer.parseInt(bottom)));
+    BigInteger[] bigInts = BigFraction.simplify(BigInteger.valueOf((Integer.parseInt(top))),
+        BigInteger.valueOf((Integer.parseInt(bottom))));
+
+    this.num = bigInts[0];
+    this.denom = bigInts[1];
   } // BigFraction
 
   // +---------+------------------------------------------------------
@@ -120,7 +128,7 @@ public class BigFraction {
     resultDenominator = this.denom.multiply(addend.denom);
     resultNumerator = (this.num.multiply(addend.denom)).add(addend.num.multiply(this.denom));
 
-    return BigFraction.simplify(new BigFraction(resultNumerator, resultDenominator));
+    return new BigFraction(resultNumerator, resultDenominator);
   } // add(BigFraction)
 
   /**
@@ -129,16 +137,25 @@ public class BigFraction {
    * @return BigFraction
    */
   public BigFraction multiplyFraction(BigFraction a) {
-    return BigFraction.simplify(new BigFraction((this.num.multiply(a.num)),
-        (this.denom.multiply(a.denom))));
+    return new BigFraction((this.num.multiply(a.num)), (this.denom.multiply(a.denom)));
   } //multiplyFraction
+
+    /**
+   * Multiplies two fractions together.
+   * @param a
+   * @return BigFraction
+   */
+  public BigFraction divideFraction(BigFraction a) {
+    return new BigFraction((this.num.multiply(a.denom)), (this.denom.multiply(a.num)));
+  } //multiplyFraction
+
 
   /**
    * Gives a remainder that is always positive.
    * @return BigFration
    */
   public BigFraction fractional() {
-    return BigFraction.simplify(new BigFraction(this.num.mod(this.denom), this.denom));
+    return new BigFraction(this.num.mod(this.denom), this.denom);
   } //fractional
 
   /**
@@ -187,19 +204,21 @@ public class BigFraction {
     resultNumerator = (this.num.multiply(subtracthend.denom))
         .subtract(subtracthend.num.multiply(this.denom));
 
-    return BigFraction.simplify(new BigFraction(resultNumerator, resultDenominator));
+    return new BigFraction(resultNumerator, resultDenominator);
   } // add(BigFraction)
 
   /**
    * Simplify a given fraction.
-   * @param sim
+   * @param a
+   * @param b
    * @return BigFraction
    */
-  public static BigFraction simplify(BigFraction sim) {
+  public static BigInteger[] simplify(BigInteger a, BigInteger b) {
 
-    int top = sim.num.intValueExact();
-    int bottom = sim.denom.intValueExact();
+    int top = a.intValueExact();
+    int bottom = b.intValueExact();
     int largestPrime = -1;
+    BigInteger[] vals = new BigInteger[2];
 
     if (bottom < 0) {
       bottom *= -1;
@@ -214,10 +233,13 @@ public class BigFraction {
       } //while
     } //for
 
+    vals[0] = BigInteger.valueOf(top);
+    vals[1] = BigInteger.valueOf(bottom);
+
     if (largestPrime > 1) {
-      return new BigFraction(top, bottom);
+      return vals;
     } //if
-    return new BigFraction(top, bottom);
+    return vals;
   } //simplify
 
   /**
