@@ -14,7 +14,7 @@ public class BFCalculator {
   // | Fields |
   // +--------+
 
-  /** The numerator of the fraction. Can be positive, zero or negative. */
+  /** The last stored fraction. Can be positive, zero or negative. */
   private BigFraction prev;
 
   // +--------------+-------------------------------------------------
@@ -34,7 +34,7 @@ public class BFCalculator {
 
   /**
    * Get the fraction.
-   * @return BigFraction
+   * @return the previous fraction stored
    */
   public BigFraction get() {
     return this.prev;
@@ -54,7 +54,6 @@ public class BFCalculator {
    * @param val
    *   The fraction to add.
    *
-   * @return
    */
   public void add(BigFraction val) {
     this.prev = this.prev.add(val);
@@ -64,9 +63,8 @@ public class BFCalculator {
    * Add another fraction to this fraction.
    *
    * @param val
-   *   The fraction to add.
+   *   The fraction to subtract.
    *
-   * @return
    */
   public void subtract(BigFraction val) {
 
