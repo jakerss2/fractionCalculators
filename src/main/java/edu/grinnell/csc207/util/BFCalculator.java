@@ -6,7 +6,7 @@ import java.math.BigInteger;
 /**
  * File created by Jacob Bell.
  *
- * Inteded use is to have the methods in order to make a calculator work
+ * Intended use is to have the methods in order to make a calculator work
  */
 public class BFCalculator {
 
