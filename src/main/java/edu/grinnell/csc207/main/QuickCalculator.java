@@ -66,11 +66,11 @@ public class QuickCalculator {
         if (arrOfArg.length == 1) {
           break;
         } else if (arrOfArg.length % 2 != 1) {
-          System.err.println("Invalid Expression");
+          System.err.println("[Invalid Expression]");
           err = 1;
           break;
         } else if (arrOfArg[0].length() == 1 && !(Character.isDigit(arrOfArg[i].charAt(0)))) {
-          System.err.println("Invalid Expression");
+          System.err.println("[Invalid Expression]");
           err = 1;
           break;
         } // else if
