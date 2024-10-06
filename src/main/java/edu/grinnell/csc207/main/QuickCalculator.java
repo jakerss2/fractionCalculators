@@ -40,7 +40,7 @@ public class QuickCalculator {
 
       if (arrOfArg[0].equals("STORE")) {
         if (Character.isLowerCase(arrOfArg[1].charAt(0))) {
-          pen.println("STORED");
+          pen.println("STORED" + calculator.get());
           register.store(arrOfArg[1].charAt(0), calculator.get());
           continue;
         } //if
@@ -69,11 +69,7 @@ public class QuickCalculator {
           System.err.println("[Invalid Expression]");
           err = 1;
           break;
-        } else if (arrOfArg[0].length() == 1 && !(Character.isDigit(arrOfArg[i].charAt(0)))) {
-          System.err.println("[Invalid Expression]");
-          err = 1;
-          break;
-        } // else if
+        } 
 
         if (arrOfArg[i + 1].length() == 1 && Character.isLowerCase(arrOfArg[i + 1].charAt(0))) {
           calculator.set(BigFraction.testArgs(calculator.get(),
