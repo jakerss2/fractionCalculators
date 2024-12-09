@@ -25,7 +25,7 @@ public class BFCalculator {
    * Create a calculator.
    */
   public BFCalculator() {
-    this.prev = new BigFraction(0, 0);
+    this.prev = new BigFraction(0, 1);
   } // BFCalculator
 
   // +---------+------------------------------------------------------
@@ -84,7 +84,7 @@ public class BFCalculator {
   public void multiply(BigFraction val) {
 
     //multiply the nums and denoms
-    this.prev = this.prev.multiplyFraction(val);
+    this.prev = this.prev.multiply(val);
   } // add(BigFraction)
 
   /**
@@ -92,13 +92,13 @@ public class BFCalculator {
    * @param val
    */
   public void divide(BigFraction val) {
-    this.prev = this.prev.divideFraction(val);
+    this.prev = this.prev.divide(val);
   } // divide(BigFraction)
 
   /**
-   * Clear the fractions by setting the num and denom to 0.
+   * Clear the fractions by setting the num to 0 and denom to 1.
    */
   public void clear() {
-    this.prev = new BigFraction(0, 0);
+    this.prev = new BigFraction(0, 1);
   } //clear
 } //BFCalculator
