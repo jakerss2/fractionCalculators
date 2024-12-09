@@ -34,6 +34,13 @@ public class BFRegisterSet {
    * @return
    */
   public void store(char register, BigFraction val) {
+    int index = 0;
+    for (; index < chars.size(); index++) {
+      if (register == this.chars.get(index)) {
+        this.chars.set(index, register);
+        this.bigFracs.set(index, val);
+      } // if
+    } // for
     this.chars.add(register);
     this.bigFracs.add(val);
   } // store
