@@ -69,7 +69,7 @@ public class QuickCalculator {
           System.err.println("[Invalid Expression]");
           err = 1;
           break;
-        } 
+        } // if
 
         if (arrOfArg[i + 1].length() == 1 && Character.isLowerCase(arrOfArg[i + 1].charAt(0))) {
           calculator.set(BigFraction.testArgs(calculator.get(),
