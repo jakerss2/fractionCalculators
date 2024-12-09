@@ -55,7 +55,7 @@ public class BigFraction {
    */
   public BigFraction(int numerator, int denominator) {
     BigInteger[] bigInts = BigFraction.simplify(BigInteger.valueOf(numerator),
-    BigInteger.valueOf(denominator));
+        BigInteger.valueOf(denominator));
 
     this.num = bigInts[0];
     this.denom = bigInts[1];
@@ -82,15 +82,17 @@ public class BigFraction {
     int slash = str.indexOf("/");
     if (slash == -1) {
       this.num = BigInteger.valueOf(Integer.parseInt(str));
-      this.denom = BigInteger.valueOf(1);
+      this.denom = BigInteger.ONE;
       return;
     } //if
 
     String top = str.substring(0, slash);
-    String bottom = str.substring((slash + 1));
+    String bottom = str.substring(slash + 1);
 
-    BigInteger[] bigInts = BigFraction.simplify(BigInteger.valueOf((Integer.parseInt(top))),
-        BigInteger.valueOf((Integer.parseInt(bottom))));
+    BigInteger numerator = new BigInteger(top);
+    BigInteger denominator = new BigInteger(bottom);
+
+    BigInteger[] bigInts = BigFraction.simplify(numerator, denominator);
 
     this.num = bigInts[0];
     this.denom = bigInts[1];
@@ -136,7 +138,7 @@ public class BigFraction {
    * @param a
    * @return BigFraction
    */
-  public BigFraction multiplyFraction(BigFraction a) {
+  public BigFraction multiply(BigFraction a) {
     return new BigFraction((this.num.multiply(a.num)), (this.denom.multiply(a.denom)));
   } //multiplyFraction
 
@@ -145,8 +147,8 @@ public class BigFraction {
    * @param a
    * @return BigFraction
    */
-  public BigFraction divideFraction(BigFraction a) {
-    return new BigFraction((this.num.multiply(a.denom)), (this.denom.multiply(a.num)));
+  public BigFraction divide(BigFraction a) {
+    return new BigFraction(this.num.multiply(a.denom), this.denom.multiply(a.num));
   } //multiplyFraction
 
 
@@ -184,7 +186,9 @@ public class BigFraction {
   public String toString() {
     if (this.num.equals(BigInteger.ZERO)) {
       return "0";
-    } //toString
+    } else if (this.denom.equals(BigInteger.ONE)) {
+      return "" + this.numerator();
+    } // if
 
     return this.num + "/" + this.denom;
   } // toString()
@@ -214,31 +218,18 @@ public class BigFraction {
    * @return BigFraction
    */
   public static BigInteger[] simplify(BigInteger a, BigInteger b) {
-
-    int top = a.intValueExact();
-    int bottom = b.intValueExact();
-    int largestPrime = -1;
     BigInteger[] vals = new BigInteger[2];
 
-    if (bottom < 0) {
-      bottom *= -1;
-      top *= -1;
+    if (b.compareTo(BigInteger.ZERO) < 0) {
+      b = b.negate();
+      a = a.negate();
     } //if
 
-    for (int i = 2; i * i <= bottom; i++) {
-      while (bottom % i == 0 && top % i == 0) {
-        bottom = bottom / i;
-        top = top / i;
-        largestPrime = i;
-      } //while
-    } //for
+    BigInteger gcd = a.gcd(b);
 
-    vals[0] = BigInteger.valueOf(top);
-    vals[1] = BigInteger.valueOf(bottom);
+    vals[0] = a.divide(gcd);
+    vals[1] = b.divide(gcd);
 
-    if (largestPrime > 1) {
-      return vals;
-    } //if
     return vals;
   } //simplify
 
